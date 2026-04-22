@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../authRedux/authSlice";
 import { Form, Button, Container, Row, Col, Card, Spinner, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+
+
 const RegisterPage = () => {
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state) => state.auth);
@@ -18,7 +20,7 @@ const RegisterPage = () => {
     myFile: null,
   });
 
-  const handleChange = (e) => {
+  const handleChange =  (e) => {
     if (e.target.name === "myFile") {
       setForm({ ...form, myFile: e.target.files[0] });
     } else {
@@ -26,7 +28,7 @@ const RegisterPage = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData();
@@ -40,7 +42,7 @@ const RegisterPage = () => {
       formData.append("myFile", form.myFile); // must match backend (req.file)
     }
     console.log(formData)
-    const res = dispatch(registerUser(formData));
+    const res = await dispatch(registerUser(formData));
     console.log(res,"&&&&&&&&&&&&&&&&&&&&&")
     if(res.success){
     navigate('/')
