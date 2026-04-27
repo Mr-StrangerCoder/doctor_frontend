@@ -1,14 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { registerUser } from "../authRedux/authSlice";
-import { Form, Button, Container, Row, Col, Card, Spinner, Alert } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-
+import { registerUser, clearError } from "../authRedux/authSlice";
+import {
+  Form,
+  Button,
+  Container,
+  Row,
+  Col,
+  Card,
+  Spinner,
+  Alert,
+} from "react-bootstrap";
+import { useNavigate, Link } from "react-router-dom";
 
 const RegisterPage = () => {
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state) => state.auth);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [form, setForm] = useState({
     name: "",
@@ -20,7 +28,16 @@ const RegisterPage = () => {
     myFile: null,
   });
 
-  const handleChange =  (e) => {
+  const [successMsg, setSuccessMsg] = useState("");
+
+  // Clear errors when component unmounts
+  useEffect(() => {
+    return () => {
+      dispatch(clearError());
+    };
+  }, [dispatch]);
+
+  const handleChange = (e) => {
     if (e.target.name === "myFile") {
       setForm({ ...form, myFile: e.target.files[0] });
     } else {
@@ -39,26 +56,28 @@ const RegisterPage = () => {
     formData.append("gender", form.gender);
     formData.append("DOB", form.DOB);
     if (form.myFile) {
-      formData.append("myFile", form.myFile); // must match backend (req.file)
+      formData.append("myFile", form.myFile);
     }
-    console.log(formData)
+
     const res = await dispatch(registerUser(formData));
-    console.log(res,"&&&&&&&&&&&&&&&&&&&&&")
-    if(res.success){
-    navigate('/')
-    }else{
-        navigate('/reg')
+
+    // FIX: check using Redux Toolkit's matcher, not res.success
+    if (registerUser.fulfilled.match(res)) {
+      setSuccessMsg("Registration successful! Redirecting to login...");
+      setTimeout(() => navigate("/"), 1500);
     }
+    // If rejected, error shows via Redux state automatically
   };
 
   return (
- <Container className="mt-5">
+    <Container className="mt-5">
       <Row className="justify-content-center">
         <Col md={6}>
           <Card className="shadow p-4">
             <h3 className="text-center mb-4">Register</h3>
 
             {error && <Alert variant="danger">{error}</Alert>}
+            {successMsg && <Alert variant="success">{successMsg}</Alert>}
 
             <Form onSubmit={handleSubmit}>
               <Form.Group className="mb-3">
@@ -115,11 +134,7 @@ const RegisterPage = () => {
 
               <Form.Group className="mb-3">
                 <Form.Label>Date of Birth</Form.Label>
-                <Form.Control
-                  type="date"
-                  name="DOB"
-                  onChange={handleChange}
-                />
+                <Form.Control type="date" name="DOB" onChange={handleChange} />
               </Form.Group>
 
               <Form.Group className="mb-3">
@@ -127,6 +142,7 @@ const RegisterPage = () => {
                 <Form.Control
                   type="file"
                   name="myFile"
+                  accept="image/*"
                   onChange={handleChange}
                 />
               </Form.Group>
@@ -135,12 +151,16 @@ const RegisterPage = () => {
                 <Button variant="primary" type="submit" disabled={loading}>
                   {loading ? (
                     <>
-                      <Spinner size="sm" /> Registering...
+                      <Spinner size="sm" className="me-2" /> Registering...
                     </>
                   ) : (
                     "Register"
                   )}
                 </Button>
+              </div>
+
+              <div className="text-center mt-3">
+                <Link to="/">Already have an account? Login</Link>
               </div>
             </Form>
           </Card>

@@ -8,16 +8,15 @@ import ProtectedRoute from './protectedRoute/ProtectedRoute';
 import Dashboard from './pages/Dashboard'
 
 const App = () => {
-  
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<LoginPage />}></Route>
-        <Route path='/register' element={<RegisterPage />}></Route>
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
 
-        <Route path='/protected' element={<ProtectedRoute />}>
-        
-            <Route path='dash' element={<Dashboard />}></Route>
+        <Route element={<ProtectedRoute />}>
+          <Route path="/dashboard" element={<Dashboard />} />
         </Route>
 
       </Routes>
