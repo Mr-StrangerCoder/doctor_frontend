@@ -14,14 +14,12 @@ const LoginPage = () => {
     password: "",
   });
 
-  // If already logged in, redirect to dashboard
   useEffect(() => {
     if (isAuthenticate) {
       navigate("/dashboard");
     }
   }, [isAuthenticate, navigate]);
 
-  // Clear errors when component unmounts
   useEffect(() => {
     return () => {
       dispatch(clearError());

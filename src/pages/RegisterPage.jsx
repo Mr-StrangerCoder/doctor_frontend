@@ -30,7 +30,6 @@ const RegisterPage = () => {
 
   const [successMsg, setSuccessMsg] = useState("");
 
-  // Clear errors when component unmounts
   useEffect(() => {
     return () => {
       dispatch(clearError());
