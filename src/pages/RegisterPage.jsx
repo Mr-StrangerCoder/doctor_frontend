@@ -68,7 +68,7 @@ const RegisterPage = () => {
         className="card border-0 shadow-lg rounded-4 overflow-hidden d-flex flex-row"
         style={{ width: "900px", height: "560px" }}
       >
-        {/* LEFT — Branding Panel */}
+  
         <div
           className="d-flex flex-column justify-content-center align-items-start p-5 text-white"
           style={{
@@ -106,7 +106,7 @@ const RegisterPage = () => {
           </p>
         </div>
 
-        {/* RIGHT — Form Panel */}
+  
         <div
           className="d-flex flex-column justify-content-center p-4"
           style={{ width: "62%", overflowY: "auto" }}
@@ -187,7 +187,7 @@ const RegisterPage = () => {
               </div>
             </div>
 
-            {/* Row 3 — Gender + DOB */}
+
             <div className="row g-2 mb-2">
               <div className="col-6">
                 <label className="form-label small fw-semibold text-secondary text-uppercase mb-1" style={{ fontSize: "11px", letterSpacing: "0.05em" }}>
@@ -218,7 +218,7 @@ const RegisterPage = () => {
               </div>
             </div>
 
-            {/* Row 4 — Profile Photo */}
+
             <div className="mb-3">
               <label className="form-label small fw-semibold text-secondary text-uppercase mb-1" style={{ fontSize: "11px", letterSpacing: "0.05em" }}>
                 Profile Photo
@@ -243,7 +243,7 @@ const RegisterPage = () => {
               />
             </div>
 
-            {/* Submit */}
+
             <button
               type="submit"
               className="btn w-100 fw-semibold rounded-3 py-2 text-white"

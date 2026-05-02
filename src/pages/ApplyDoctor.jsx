@@ -34,7 +34,6 @@ const ApplyDoctor = () => {
 
   return (
     <div>
-      {/* Toast */}
       {toast.msg && (
         <div className={`alert alert-${toast.type} py-2 small fw-semibold position-fixed`}
           style={{ top: "80px", right: "16px", zIndex: 9999, minWidth: "260px" }}>
@@ -112,7 +111,7 @@ const ApplyDoctor = () => {
               </div>
 
               <div className="alert alert-info py-2 small mb-4" role="alert">
-                ℹ️ Your application will be reviewed by the admin. You will be notified once approved.
+                Your application will be reviewed by the admin. You will be notified once approved.
               </div>
 
               <button

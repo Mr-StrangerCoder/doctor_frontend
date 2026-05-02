@@ -10,7 +10,7 @@ const Appointments = () => {
   const [allDoctors, setAllDoctors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [toast, setToast] = useState({ msg: "", type: "" });
-  const [bookForm, setBookForm] = useState({ doctorId: "", date: "", time: "" });
+  const [bookForm, setBookForm] = useState({ doctor_id: "", date_time: "" });
   const [showBookForm, setShowBookForm] = useState(false);
 
   const showToast = (msg, type = "success") => {
@@ -30,7 +30,8 @@ const Appointments = () => {
       if (role === "admin")       res = await axiosInstance.get("appointment/getAllAppointments");
       else if (role === "doctor") res = await axiosInstance.get("appointment/getAppointmentOfDoctor");
       else                        res = await axiosInstance.get("appointment/getAppointmentsByUser");
-      setAppointments(res.data || []);
+      console.log("Appointments response:", res.data); // add this
+      setAppointments(res.data?.apps || []); 
     } catch (err) {
       console.error(err);
     } finally {
@@ -40,13 +41,15 @@ const Appointments = () => {
 
   const fetchDoctors = async () => {
     try {
-      const res = await axiosInstance.get("doctor/doctors");
-      setAllDoctors(res.data?.data || []);
+      const res = await axiosInstance.get("user/getAllDoctors"); 
+       console.log("Doctors response:", res.data);
+      setAllDoctors(res.data?.doctors || []);
     } catch (err) {
       console.error(err);
     }
   };
 
+  
   const handleStatusUpdate = async (id, status) => {
     try {
       await axiosInstance.patch(`appointment/statusUpdate/${id}`, { status });
@@ -57,9 +60,10 @@ const Appointments = () => {
     }
   };
 
+  
   const handleCancel = async (id) => {
     try {
-      await axiosInstance.delete(`appointment/deleteAppointment/${id}`);
+      await axiosInstance.delete(`appointment/delAppointment/${id}`); 
       setAppointments(prev => prev.filter(a => a._id !== id));
       showToast("Appointment cancelled!");
     } catch (err) {
@@ -67,14 +71,19 @@ const Appointments = () => {
     }
   };
 
+  
   const handleBookChange = (e) => setBookForm({ ...bookForm, [e.target.name]: e.target.value });
 
   const handleBookSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axiosInstance.post("appointment/bookAppointment", bookForm);
+      await axiosInstance.post("appointment/createAppointment", {
+        user_id:   user._id,
+        doctor_id: bookForm.doctor_id,
+        date_time: bookForm.date_time,
+      });
       showToast("Appointment booked successfully!");
-      setBookForm({ doctorId: "", date: "", time: "" });
+      setBookForm({ doctor_id: "", date_time: "" });
       setShowBookForm(false);
       fetchAppointments();
     } catch (err) {
@@ -90,7 +99,7 @@ const Appointments = () => {
 
   return (
     <div>
-      {/* Toast */}
+      
       {toast.msg && (
         <div className={`alert alert-${toast.type} py-2 small fw-semibold position-fixed`}
           style={{ top: "80px", right: "16px", zIndex: 9999, minWidth: "260px" }}>
@@ -98,7 +107,7 @@ const Appointments = () => {
         </div>
       )}
 
-      {/* Header */}
+
       <div className="d-flex justify-content-between align-items-center mb-4">
         <div>
           <h5 className="fw-bold mb-0" style={{ color: "#0F6E56" }}>
@@ -117,16 +126,24 @@ const Appointments = () => {
         )}
       </div>
 
-      {/* Book Form - user only */}
+    
       {role === "user" && showBookForm && (
         <div className="card border-0 shadow-sm rounded-4 mb-4">
           <div className="card-body p-4">
             <h6 className="fw-bold mb-3" style={{ color: "#0F6E56" }}>Book New Appointment</h6>
             <form onSubmit={handleBookSubmit}>
               <div className="row g-3">
-                <div className="col-md-4">
-                  <label className="form-label fw-semibold text-secondary text-uppercase" style={{ fontSize: "11px" }}>Select Doctor</label>
-                  <select name="doctorId" className="form-select form-select-sm rounded-3" value={bookForm.doctorId} onChange={handleBookChange} required>
+                <div className="col-md-6">
+                  <label className="form-label fw-semibold text-secondary text-uppercase" style={{ fontSize: "11px" }}>
+                    Select Doctor
+                  </label>
+                  <select
+                    name="doctor_id"
+                    className="form-select form-select-sm rounded-3"
+                    value={bookForm.doctor_id}
+                    onChange={handleBookChange}
+                    required
+                  >
                     <option value="" disabled>Choose a doctor...</option>
                     {allDoctors.map(d => (
                       <option key={d._id} value={d._id}>
@@ -135,17 +152,25 @@ const Appointments = () => {
                     ))}
                   </select>
                 </div>
-                <div className="col-md-4">
-                  <label className="form-label fw-semibold text-secondary text-uppercase" style={{ fontSize: "11px" }}>Date</label>
-                  <input type="date" name="date" className="form-control form-control-sm rounded-3" value={bookForm.date} onChange={handleBookChange} required />
-                </div>
-                <div className="col-md-4">
-                  <label className="form-label fw-semibold text-secondary text-uppercase" style={{ fontSize: "11px" }}>Time</label>
-                  <input type="time" name="time" className="form-control form-control-sm rounded-3" value={bookForm.time} onChange={handleBookChange} required />
+                <div className="col-md-6">
+                  <label className="form-label fw-semibold text-secondary text-uppercase" style={{ fontSize: "11px" }}>
+                    Date & Time
+                  </label>
+                  <input
+                    type="datetime-local"
+                    name="date_time"
+                    className="form-control form-control-sm rounded-3"
+                    value={bookForm.date_time}
+                    onChange={handleBookChange}
+                    required
+                  />
                 </div>
               </div>
-              <button type="submit" className="btn mt-3 fw-semibold rounded-3 text-white px-4"
-                style={{ background: "linear-gradient(135deg, #1D9E75, #0F6E56)", border: "none", fontSize: "13px" }}>
+              <button
+                type="submit"
+                className="btn mt-3 fw-semibold rounded-3 text-white px-4"
+                style={{ background: "linear-gradient(135deg, #1D9E75, #0F6E56)", border: "none", fontSize: "13px" }}
+              >
                 Confirm Booking
               </button>
             </form>
@@ -153,7 +178,7 @@ const Appointments = () => {
         </div>
       )}
 
-      {/* Appointments Table */}
+  
       {loading ? (
         <div className="text-center py-5">
           <div className="spinner-border" style={{ color: "#0F6E56" }} role="status">
@@ -169,8 +194,7 @@ const Appointments = () => {
                 {role === "admin"  && <><th className="text-uppercase text-muted fw-semibold" style={{ fontSize: "11px" }}>Patient</th><th className="text-uppercase text-muted fw-semibold" style={{ fontSize: "11px" }}>Doctor</th></>}
                 {role === "doctor" && <th className="text-uppercase text-muted fw-semibold" style={{ fontSize: "11px" }}>Patient</th>}
                 {role === "user"   && <th className="text-uppercase text-muted fw-semibold" style={{ fontSize: "11px" }}>Doctor</th>}
-                <th className="text-uppercase text-muted fw-semibold" style={{ fontSize: "11px" }}>Date</th>
-                <th className="text-uppercase text-muted fw-semibold" style={{ fontSize: "11px" }}>Time</th>
+                <th className="text-uppercase text-muted fw-semibold" style={{ fontSize: "11px" }}>Date & Time</th>
                 <th className="text-uppercase text-muted fw-semibold" style={{ fontSize: "11px" }}>Status</th>
                 {role !== "admin" && <th className="text-uppercase text-muted fw-semibold" style={{ fontSize: "11px" }}>Action</th>}
               </tr>
@@ -179,11 +203,12 @@ const Appointments = () => {
               {appointments.length > 0 ? appointments.map((a, i) => (
                 <tr key={a._id}>
                   <td className="small text-muted align-middle">{i + 1}</td>
-                  {role === "admin"  && <><td className="small fw-semibold align-middle">{a.userId?.name || "—"}</td><td className="small text-muted align-middle">{a.doctorId?.name || "—"}</td></>}
-                  {role === "doctor" && <td className="small fw-semibold align-middle">{a.userId?.name || "—"}</td>}
-                  {role === "user"   && <td className="small fw-semibold align-middle">{a.doctorId?.name || "—"}</td>}
-                  <td className="small text-muted align-middle">{a.date || "—"}</td>
-                  <td className="small text-muted align-middle">{a.time || "—"}</td>
+                  {role === "admin"  && <><td className="small fw-semibold align-middle">{a.user_name || "—"}</td><td className="small text-muted align-middle">{a.doctor_name || "—"}</td></>}
+                  {role === "doctor" && <td className="small fw-semibold align-middle">{a.user_name || "—"}</td>}
+                  {role === "user"   && <td className="small fw-semibold align-middle">{a.doctor_name || "—"}</td>}
+                  <td className="small text-muted align-middle">
+                    {a.date_time ? new Date(a.date_time).toLocaleString() : "—"}
+                  </td>
                   <td className="align-middle">{statusBadge(a.status)}</td>
                   {role === "doctor" && (
                     <td className="align-middle">

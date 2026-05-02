@@ -7,6 +7,7 @@ const menuConfig = {
     { label: "Appointments", path: "/appointments", icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> },
     { label: "Doctors",      path: "/doctors",      icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> },
     { label: "Profile",      path: "/profile",      icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> },
+    { label: "All Users", path: "/users", icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> },
   ],
   doctor: [
     { label: "Dashboard",       path: "/dashboard",    icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg> },
@@ -30,13 +31,13 @@ const Sidebar = ({ isOpen }) => {
 
   return (
     <>
-      {/* Overlay for mobile */}
+      
       <div
         style={{ display: isOpen ? "block" : "none", position: "fixed", inset: 0, background: "rgba(0,0,0,0.35)", zIndex: 199 }}
         className="d-md-none"
       />
 
-      {/* Sidebar */}
+      
       <div style={{
         width: isOpen ? sidebarWidth : "0",
         minWidth: isOpen ? sidebarWidth : "0",
@@ -53,7 +54,7 @@ const Sidebar = ({ isOpen }) => {
       }}>
         <div style={{ width: sidebarWidth }}>
 
-          {/* Logo */}
+      
           <div className="d-flex align-items-center gap-2 px-4"
             style={{ height: "64px", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
             <div className="d-flex align-items-center justify-content-center rounded-circle"
@@ -66,7 +67,7 @@ const Sidebar = ({ isOpen }) => {
             </span>
           </div>
 
-          {/* Role Label */}
+      
           <div className="px-4 pt-4 pb-2">
             <span className="text-uppercase fw-semibold"
               style={{ fontSize: "10px", letterSpacing: "0.12em", color: "rgba(255,255,255,0.4)", whiteSpace: "nowrap" }}>
@@ -74,7 +75,7 @@ const Sidebar = ({ isOpen }) => {
             </span>
           </div>
 
-          {/* Menu Items */}
+    
           <ul className="list-unstyled px-3 mb-0">
             {menuItems.map((item) => (
               <li key={item.path} className="mb-1">
@@ -97,7 +98,7 @@ const Sidebar = ({ isOpen }) => {
             ))}
           </ul>
 
-          {/* Bottom — User Info */}
+  
           <div className="mx-3 mt-4 p-3 rounded-3"
             style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.08)" }}>
             <div className="d-flex align-items-center gap-2">

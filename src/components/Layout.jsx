@@ -8,18 +8,18 @@ const Layout = () => {
 
   return (
     <div style={{ display: "flex", height: "100vh", overflow: "hidden", background: "#f5f7fa" }}>
-      {/* Sidebar */}
+    
       <Sidebar isOpen={sidebarOpen} />
 
-      {/* Main Area */}
+    
       <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
-        {/* Navbar */}
+      
         <Navbar
           onToggleSidebar={() => setSidebarOpen((prev) => !prev)}
           sidebarOpen={sidebarOpen}
         />
 
-        {/* Page Content */}
+      
         <main
           style={{
             flex: 1,

@@ -37,6 +37,7 @@ const Doctors = () => {
   const fetchAppliedDoctors = async () => {
     try {
       const res = await axiosInstance.get("doctor/appliedDoctors");
+       console.log("Applied doctors:", res.data);
       setAppliedDoctors(res.data?.doctorsList || []);
     } catch (err) {
       console.error(err);
@@ -56,7 +57,7 @@ const Doctors = () => {
 
   return (
     <div>
-      {/* Toast */}
+  
       {toast.msg && (
         <div className={`alert alert-${toast.type} py-2 small fw-semibold position-fixed`}
           style={{ top: "80px", right: "16px", zIndex: 9999, minWidth: "260px" }}>
@@ -67,7 +68,7 @@ const Doctors = () => {
       <h5 className="fw-bold mb-1" style={{ color: "#0F6E56" }}>🩺 Doctors</h5>
       <p className="text-muted small mb-4">{doctors.length} approved doctors</p>
 
-      {/* Admin Tabs */}
+    
       {role === "admin" && (
         <div className="d-flex gap-2 mb-4">
           {[
@@ -91,7 +92,7 @@ const Doctors = () => {
         </div>
       ) : (
         <>
-          {/* Approved Doctors */}
+      
           {(activeTab === "approved" || role !== "admin") && (
             <div className="row g-3">
               {doctors.length > 0 ? doctors.map((d) => (
@@ -128,7 +129,7 @@ const Doctors = () => {
             </div>
           )}
 
-          {/* Applied Doctors (admin only) */}
+    
           {role === "admin" && activeTab === "applied" && (
             <div className="card border-0 shadow-sm rounded-4 overflow-hidden">
               <table className="table table-hover mb-0">

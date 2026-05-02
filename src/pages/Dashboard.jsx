@@ -13,13 +13,13 @@ const Dashboard = () => {
       try {
         if (role === "admin") {
           const res = await axiosInstance.get("appointment/getAllAppointments");
-          setAppointments(res.data.appointments || []);
+          setAppointments(res.data?.apps || []);
         } else if (role === "doctor") {
           const res = await axiosInstance.get("appointment/getAppointmentOfDoctor");
-          setAppointments(res.data.appointments || []);
+          setAppointments(res.data?.apps || []);
         } else {
           const res = await axiosInstance.get("appointment/getAppointmentsByUser");
-          setAppointments(res.data.appointments || []);
+          setAppointments(res.data?.apps || []);
         }
       } catch (err) {
         console.error(err);
@@ -58,7 +58,7 @@ const Dashboard = () => {
         </div>
       ) : (
         <>
-          {/* Stat Cards */}
+      
           <div className="row g-3 mb-4">
             {stats.map((c, i) => (
               <div className={colClass} key={i}>
@@ -73,7 +73,7 @@ const Dashboard = () => {
             ))}
           </div>
 
-          {/* Status Guide */}
+    
           <div className="row g-3">
             <div className="col-md-5">
               <div className="card border-0 shadow-sm rounded-4">
@@ -101,7 +101,6 @@ const Dashboard = () => {
                     ["Name",    user?.name    || "—"],
                     ["Email",   user?.email   || "—"],
                     ["Role",    user?.role    || "—"],
-                    ["Gender",  user?.gender  || "—"],
                   ].map(([k, v], i) => (
                     <div key={i} className={`d-flex justify-content-between py-2 ${i < 3 ? "border-bottom" : ""}`} style={{ fontSize: "13px" }}>
                       <span className="text-muted">{k}</span>

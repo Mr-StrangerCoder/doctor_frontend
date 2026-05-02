@@ -11,7 +11,7 @@ async function registerAPI(data) {
 
 async function loginAPI(credentials) {
   const res = await axiosInstance.post("/user/login", credentials);
-  return res.data; // expects { token, user: { name, role, email, ... } }
+  return res.data; 
 }
 
 export { registerAPI, loginAPI };

@@ -36,7 +36,7 @@ const Navbar = ({ onToggleSidebar, sidebarOpen }) => {
         boxShadow: "0 1px 8px rgba(0,0,0,0.06)",
       }}
     >
-      {/* LEFT — Toggle + Brand */}
+  
       <div className="d-flex align-items-center gap-3">
         <button
           onClick={onToggleSidebar}
@@ -58,7 +58,7 @@ const Navbar = ({ onToggleSidebar, sidebarOpen }) => {
           </svg>
         </button>
 
-        {/* Brand */}
+  
         <div className="d-flex align-items-center gap-2">
           <div
             className="d-flex align-items-center justify-content-center rounded-circle"
@@ -81,9 +81,9 @@ const Navbar = ({ onToggleSidebar, sidebarOpen }) => {
         </div>
       </div>
 
-      {/* RIGHT — User Info + Logout */}
+  
       <div className="d-flex align-items-center gap-2 gap-md-3">
-        {/* Role Badge */}
+    
         <span
           className="badge d-none d-sm-inline-flex"
           style={{
@@ -98,7 +98,7 @@ const Navbar = ({ onToggleSidebar, sidebarOpen }) => {
           {badge.label}
         </span>
 
-        {/* User Avatar + Name */}
+    
         <div className="d-flex align-items-center gap-2">
           <div
             className="d-flex align-items-center justify-content-center rounded-circle text-white fw-bold"
@@ -120,7 +120,7 @@ const Navbar = ({ onToggleSidebar, sidebarOpen }) => {
           </span>
         </div>
 
-        {/* Logout Button */}
+      
         <button
           onClick={handleLogout}
           className="btn btn-sm d-flex align-items-center gap-1 fw-semibold"

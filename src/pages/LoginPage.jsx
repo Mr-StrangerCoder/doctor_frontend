@@ -53,7 +53,7 @@ const LoginPage = () => {
         className="card border-0 shadow-lg rounded-4 overflow-hidden d-flex flex-row"
         style={{ width: "780px", height: "420px" }}
       >
-        {/* LEFT — Branding Panel */}
+      
         <div
           className="d-flex flex-column justify-content-center align-items-start p-5 text-white"
           style={{
@@ -94,7 +94,7 @@ const LoginPage = () => {
           </p>
         </div>
 
-        {/* RIGHT — Form Panel */}
+      
         <div
           className="d-flex flex-column justify-content-center p-5"
           style={{ width: "58%" }}

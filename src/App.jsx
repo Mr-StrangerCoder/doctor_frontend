@@ -8,6 +8,7 @@ import Appointments from './pages/Appointment';
 import Doctors from './pages/Doctors';
 import ApplyDoctor from './pages/ApplyDoctor';
 import Profile from './pages/Profile';
+import Users from './pages/Users';
 
 const App = () => {
   return (
@@ -17,7 +18,6 @@ const App = () => {
         <Route path="/" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
 
-        {/* Protected Routes — wrapped in Layout (Navbar + Sidebar) */}
         <Route element={<ProtectedRoute />}>
           <Route element={<Layout />}>
             <Route path="/dashboard"    element={<Dashboard />} />
@@ -25,6 +25,7 @@ const App = () => {
             <Route path="/doctors"      element={<Doctors />} />
             <Route path="/apply-doctor" element={<ApplyDoctor />} />
             <Route path="/profile"      element={<Profile />} />
+            <Route path="/users" element={<Users />} />
           </Route>
         </Route>
       </Routes>
