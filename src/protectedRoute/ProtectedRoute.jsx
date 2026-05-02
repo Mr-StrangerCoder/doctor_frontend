@@ -5,7 +5,11 @@ const ProtectedRoute = () => {
   const { isAuthenticate } = useSelector((state) => state.auth);
   const token = localStorage.getItem("token");
 
-  return isAuthenticate || token ? <Outlet /> : <Navigate to="/" />;
+  if (!token) {
+    return <Navigate to="/" />;
+  }
+
+  return isAuthenticate ? <Outlet /> : <Navigate to="/" />;
 };
 
 export default ProtectedRoute;
