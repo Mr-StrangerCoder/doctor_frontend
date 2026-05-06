@@ -1,16 +1,106 @@
-# React + Vite
+# 🏥 MediCare — Doctor Appointment Booking System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack doctor appointment booking system with three user roles — Admin, Doctor, and Patient — built using the MERN stack.
 
-Currently, two official plugins are available:
+## 🔗 Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Frontend:** https://doctor-frontend-ebon.vercel.app
+- **Backend:** https://doctor-backend-ad66.onrender.com
 
-## React Compiler
+## 📁 GitHub Repositories
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Frontend:** https://github.com/Mr-StrangerCoder/doctor_frontend
+- **Backend:** https://github.com/Mr-StrangerCoder/doctor_backend
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+| Layer | Technology |
+|-------|-----------|
+| Frontend | React.js (Vite) + Bootstrap |
+| Backend | Node.js + Express.js |
+| Database | MongoDB Atlas + Mongoose |
+| Authentication | JWT (JSON Web Tokens) |
+| Deployment | Vercel (Frontend) + Render (Backend) |
+
+## ✨ Features
+
+- 🔐 **JWT Authentication** — Secure login for all roles
+- 👨‍⚕️ **Doctor Role** — Manage appointments, view patients
+- 🧑‍💼 **Admin Role** — Manage doctors, users, and appointments
+- 🙋 **Patient Role** — Book, view, and cancel appointments
+- 🎨 **Bootstrap UI** — Clean teal gradient design
+- 📱 **Responsive** — Works on all screen sizes
+
+## 👥 User Roles
+
+| Role | Capabilities |
+|------|-------------|
+| Admin | Manage doctors, users, all appointments |
+| Doctor | View & manage own appointments |
+| Patient | Book appointments, view history |
+
+## 📂 Project Structure
+
+```
+doctor_backend/
+├── controllers/
+├── models/
+├── routes/
+├── middleware/
+├── config/
+└── server.js
+
+doctor_frontend/
+├── src/
+│   ├── pages/
+│   ├── components/
+│   ├── context/
+│   └── api/
+```
+
+## ⚙️ Local Setup
+
+### Backend
+```bash
+git clone https://github.com/Mr-StrangerCoder/doctor_backend.git
+cd doctor_backend
+npm install
+```
+
+Create `.env` file:
+```env
+PORT=5000
+MONGO_URI=your_mongodb_atlas_uri
+JWT_SECRET=your_jwt_secret
+```
+
+```bash
+npm run dev
+```
+
+### Frontend
+```bash
+git clone https://github.com/Mr-StrangerCoder/doctor_frontend.git
+cd doctor_frontend
+npm install
+npm run dev
+```
+
+## 🔌 API Endpoints
+
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| POST | `/api/auth/register` | Register user | ❌ |
+| POST | `/api/auth/login` | Login user | ❌ |
+| GET | `/api/doctors` | Get all doctors | ✅ |
+| POST | `/api/appointments` | Book appointment | ✅ |
+| GET | `/api/appointments` | Get appointments | ✅ |
+| PUT | `/api/appointments/:id` | Update appointment | ✅ |
+| DELETE | `/api/appointments/:id` | Cancel appointment | ✅ |
+
+## 👨‍💻 Developer
+
+**Aadesh Sonawane**
+- 📧 aadeshsonawane307@gmail.com
+- 🌐 https://aadeshsonawane.netlify.app
+- 💻 https://github.com/Mr-StrangerCoder
